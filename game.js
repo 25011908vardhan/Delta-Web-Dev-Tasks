@@ -1,7 +1,8 @@
 
 
-
-
+var fail= new Audio("fail.mp3");
+var victory= new Audio("rickroll.mp3");
+var jump= new Audio("jump.mp3");
 var rest=document.getElementById('btn');
 var scoreEle=document.getElementById('score');
 var hiScore=document.getElementById('highScore');
@@ -16,7 +17,7 @@ if(localStorage.getItem("highScore")==null)
 localStorage.setItem("highScore",JSON.stringify(highScore));
 else
 {hiScoreLocalStorage=JSON.parse(localStorage.getItem('highScore'));
-hiScore.innerHTML="HighScore: "+hiScoreLocalStorage[0]+"->"+hiScoreLocalStorage[1];
+hiScore.innerHTML="Best: "+hiScoreLocalStorage[0]+"->"+hiScoreLocalStorage[1];
 }
 
 
@@ -45,14 +46,15 @@ var dx=2;
 
 // Flipping the runner object on click/spacebar
 document.addEventListener('click',flip); //On Click
-document.body.onkeyup=(e)=>              //On Spacebar
-  {
-       if(e.keyCode==32)
-       {
-           e.preventDefault();
-           flip();}
-  }
- 
+document.body.onkeydown=(e)=>              //On Spacebar
+{
+    if(e.keyCode==32)
+    {
+        flip();
+        e.preventDefault();
+    }
+}
+
 // Making an array for widths
 var widths=[200,100,150,220,110];
 var index=0;
@@ -65,6 +67,9 @@ var stop=0;
 
 
 function flip(){
+    
+    jump.play();
+    jump.playbackRate=4;
     if(y==2/3*innerHeight-81)
     {
         c.clearRect(0,innerHeight/3,innerWidth,innerHeight/3);
@@ -72,13 +77,14 @@ function flip(){
         c.fillStyle="red";
         c.fillRect(200,y,80,80);
         objY=innerHeight/3;
+        
     }
     
-        else
-        {    c.clearRect(0,innerHeight/3,innerWidth,innerHeight/3);
-            y=2/3*innerHeight-81;
-            c.fillStyle="red";
-            c.fillRect(200,y,80,80);
+    else
+    {    c.clearRect(0,innerHeight/3,innerWidth,innerHeight/3);
+        y=2/3*innerHeight-81;
+        c.fillStyle="red";
+        c.fillRect(200,y,80,80);
         objY=2/3*innerHeight;
     }
 }
@@ -93,80 +99,89 @@ function Obstacles(){
     score+=0.01;
     scoreEle.innerHTML="Score: "+Math.floor(score);
     // Checking whether the object dies or not
-     if(objX+70<=x +width1b&&objX+70>=x&& objY==2/3*innerHeight)
-     stop=1;
-     else if(objX+70<=x2+width1b&&objX+70>=x2 && objY==2/3*innerHeight)
-     stop=1;
-     else if(objX+70<=x3+width1b&&objX+70>=x3 && objY-1==innerHeight/3)
-     stop=1;
-     else if(objX+70<=x4+width1b&&objX+70>=x4 && objY==innerHeight/3)
-     stop=1;
-     if(stop==1)
-     {
-         window.cancelAnimationFrame(id);
-         document.removeEventListener('click',flip);
-         document.body.onkeyup=null;
-         gameOver();
-          
+    if(objX+70<=x +width1b&&objX+70>=x&& objY==2/3*innerHeight)
+    stop=1;
+    else if(objX+70<=x2+width1b&&objX+70>=x2 && objY==2/3*innerHeight)
+    stop=1;
+    else if(objX+70<=x3+width1b&&objX+70>=x3 && objY-1==innerHeight/3)
+    stop=1;
+    else if(objX+70<=x4+width1b&&objX+70>=x4 && objY==innerHeight/3)
+    stop=1;
+    if(stop==1)
+    {
+        window.cancelAnimationFrame(id);
+        document.removeEventListener('click',flip);
+        document.body.onkeydown=null;
+        gameOver();
+        
     }
     
-
-
+    
+    
     // clearing and making again bottom&top screen 2/3*innerHeight to innerHeight
     c.clearRect(0,0,innerWidth,innerHeight/3);//top
     c.clearRect(0,2/3*innerHeight,innerWidth,innerHeight/3);//bottom
     c.fillStyle="black";
     c.fillRect(0,0,innerWidth,innerHeight/3)//top
     c.fillRect(0,2/3*innerHeight,innerWidth,innerHeight/3);//bottom
-
+    
     //1st bottom Obstacle
     c.fillStyle="rgb(95, 72, 37)";
     c.fillRect(x,2/3*innerHeight-1,width1b,innerHeight/3);
     if(x<-width1b)
     x=innerWidth;
     x-=dx;
-
+    
     //2nd bottom Obstacle
     c.fillStyle="rgb(95, 72, 37)"
     c.fillRect(x2,2/3*innerHeight-1,width1b,innerHeight/3);
     if(x2<-width1b)
     x2=innerWidth;
     x2-=dx;
- 
+    
     // 1st Top Obstacle
     c.fillStyle="rgb(95, 72, 37)";
     c.fillRect(x3,0,width1b,innerHeight/3+1);
     if(x3<-width1b)
     x3=innerWidth;
     x3-=dx;
-
+    
     // 2nd Top Obstacle
     c.fillStyle="rgb(95, 72, 37)";
     c.fillRect(x4,0,width1b,innerHeight/3+1);
     if(x4<-width1b)
     x4=innerWidth;
     x4-=dx;
-
-
+    
+    
 }
 Obstacles();
 function gameOver()
 {
-    
+    var hiScoreLocalStorage=JSON.parse(localStorage.getItem('highScore'));
     // over.style.visibility="visible";
     // over.innerHTML="Game Over!!!"+"\n"+"Your Score is : "+score;
     if(Math.floor(score)>hiScoreLocalStorage[1])
     {
         // over.innerHTML+="\n"+"Congratulations You've made a HighScore!!!";
+        victory.play();
         hiScoreLocalStorage[0]=prompt("Game Over!!!\nYour Score is :"+Math.floor(score)+"\nHighScore!!!\nEnter your Name: ");
+        if(hiScoreLocalStorage[0]==null || hiScoreLocalStorage[0]=="")
+        hiScoreLocalStorage[0]="Anon";
         hiScoreLocalStorage[1]=Math.floor(score);
         localStorage.setItem("highScore",JSON.stringify(hiScoreLocalStorage));
+        hiScore.innerHTML="Best: "+hiScoreLocalStorage[0]+"->"+hiScoreLocalStorage[1];
+        
     }
     else
-    alert("Game Over!!!\nYour Score is :"+Math.floor(score));
-     
-    rest.style.backgroundImage="linear-gradient(rgb(174, 255, 191),rgb(96, 219, 48))";
-}
+    { 
+        fail.play();
+        hiScore.innerHTML="Best: "+hiScoreLocalStorage[0]+"->"+hiScoreLocalStorage[1];
+        alert("Game Over!!!\nYour Score is :"+Math.floor(score));
+    }
+        
+        rest.style.backgroundImage="linear-gradient(rgb(174, 255, 191),rgb(96, 219, 48))";
+    }
 function restart(){
     location.reload();
 }
