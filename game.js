@@ -23,8 +23,8 @@ hiScore.innerHTML="Best: "+hiScoreLocalStorage[0]+"->"+hiScoreLocalStorage[1];
 
 console.log("Hello! Welcome to the Game!!!");
 var canvas= document.querySelector("canvas");
-canvas.width=window.innerWidth;
-canvas.height=(window.innerHeight)-50;
+canvas.width=window.innerWidth-5;
+canvas.height=(window.innerHeight)-60;
 var c= canvas.getContext('2d');
 
 //Creating 3 fields i.e. bg for game
@@ -90,9 +90,9 @@ function flip(){
 }
 var x=innerWidth,dx=4,width1b=widths[index];
 var x2=innerWidth+700;
-var x3=innerWidth+11000;
+var x3=innerWidth+1000;
 var x4=innerWidth+2100;
-
+console.log(window.innerWidth);
 
 function Obstacles(){
     var id=window.requestAnimationFrame(Obstacles);
@@ -109,10 +109,10 @@ function Obstacles(){
     stop=1;
     if(stop==1)
     {
+        gameOver();
         window.cancelAnimationFrame(id);
         document.removeEventListener('click',flip);
         document.body.onkeydown=null;
-        gameOver();
         
     }
     
@@ -166,7 +166,7 @@ function gameOver()
         // over.innerHTML+="\n"+"Congratulations You've made a HighScore!!!";
         victory.play();
         hiScoreLocalStorage[0]=prompt("Game Over!!!\nYour Score is :"+Math.floor(score)+"\nHighScore!!!\nEnter your Name: ");
-        if(hiScoreLocalStorage[0]==null || hiScoreLocalStorage[0]=="")
+        if(hiScoreLocalStorage[0]==null || !hiScoreLocalStorage[0].trim())
         hiScoreLocalStorage[0]="Anon";
         hiScoreLocalStorage[1]=Math.floor(score);
         localStorage.setItem("highScore",JSON.stringify(hiScoreLocalStorage));
