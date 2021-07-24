@@ -1,19 +1,23 @@
+
 body{
     padding: 0;
-    margin: 0;
+    margin:0.5px;
     height: 100%;
     width: 100%;
 }
 canvas{
-    border: 2px solid black;
-    background-color:rgb(95, 72, 37);
+    border: 0px 1px 0px 1px 1px solid rgba(70, 70, 70, 0.61);
+    background-color:rgb(75, 34, 102);
+    user-select: none;   /* To prevent text selection on double clicking */
+
 }
 #score{
     /* margin-left: 15%; */
     font-family: cursive;
   float: left;
     width:55%;
-    background-color: lightblue;
+    background-color: rgb(78, 78, 78);
+    color: rgb(50, 114, 231);
     text-align: center;
     justify-content: center;
     font-size: 40px;
@@ -21,9 +25,10 @@ canvas{
     
 }
 #highScore{
- float: right;
-  width: 30%;
-    background-color: rgb(81, 236, 210);
+    float: right;
+    width: 29%;
+    background-color: rgb(78, 78, 78);
+    color: hsl(81, 100%, 50%);
     text-align: center;
     font-size: 35px;
     height: 50px;
@@ -32,16 +37,48 @@ canvas{
 /* #gOver{
     visibility:hidden;
 } */
-#btn{
+#btnr{
     float: left;
     /* background-image:linear-gradient(rgb(174, 255, 191),rgb(96, 219, 48)); */
-    background-image:linear-gradient(rgb(105, 73, 248),rgb(203, 154, 243));
+    background-color: hsl(81, 100%, 50%);
+    color: green;
     /* display: inline-block; */
-    width: 15%;
+    width: 16%;
     height: 50px;
-    font-size: 15px;
+    font-size: 23px;
     font-family: cursive;
+    
 }
-#btn:hover{
-    font-size: 18px;
+#btnr:hover{
+    font-size: 24px;
+    background-color: rgba(8, 131, 8, 0.911);
+    color:  hsl(81, 100%, 50%);
+    cursor: pointer;
+}
+.msg{
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    border: 2px solid black;
+    background-color: rgb(146, 255, 182);
+    width: 35%;
+    height: 140px;
+    text-align: center;
+    color: rgb(24, 85, 5);
+    font-size: 23px;
+}
+#score{
+    display: inline-block;
+}
+#win{
+visibility: hidden;
+}
+#lost{
+visibility: hidden;
+}
+.btn{
+    display: inline-block;
+    font-size: 23px;
+    color: green;
+    background: greenyellow;
 }

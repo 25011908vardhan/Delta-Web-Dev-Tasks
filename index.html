@@ -9,12 +9,30 @@
 </head>
 <body>
     <div id="timepass">
-        <button id="btn" onclick="restart()">RESTART</button>
+        <button id="btnr" onclick="restart()">RESTART</button>
         <span id="score"></span>
     </div>
     <div id="highScore">HighScore: </div>
-
+    
+    <div class="msg" id="lost" >
+        <div id="scoremsg1"></div>
+        <br>
+        Click Restart To Start Afresh :)
+        <br>
+        <br>
+        <button class="btn" id="btnl" onclick="hideLostMsg()">OK</button>
+    </div>
+    <div class="msg" id="win">
+        Congratulations You have made a HIGHSCORE!!!
+        <br>
+        <div id="scoremsg2"></div>
+        <br>
+        Click Restart To Play Again :)
+        <br>
+        <button class="btn" id="btnw" onclick="hideWinMsg()">OK!</button>
+    </div>
     <canvas>
+        <img src="triangle_80x80.jpg" alt="Triangle Image" id="img">
     </canvas>
     <!-- <div id="gOver">
 
